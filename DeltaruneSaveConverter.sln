@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaruneSaveConverter", "DeltaruneSaveConverter.csproj", "{FA07A87D-785E-475D-BA3D-C62DCCEF13BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA07A87D-785E-475D-BA3D-C62DCCEF13BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA07A87D-785E-475D-BA3D-C62DCCEF13BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA07A87D-785E-475D-BA3D-C62DCCEF13BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA07A87D-785E-475D-BA3D-C62DCCEF13BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1BAABB1C-6BFE-452A-8227-DA339B68A25B}
+	EndGlobalSection
+EndGlobal
