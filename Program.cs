@@ -89,7 +89,24 @@ namespace DeltaruneSaveConverter
                         Console.WriteLine($"error: {ex.Message}");
                         return;
                     }
-                } else
+                }
+                else if (filename.StartsWith("filech2")) // assume this is a console save file from Chapter 2
+                {
+                    try
+                    {
+                        Console.Write($"Converting save file {filename} from console to PC... ");
+                        DeltaruneCh2 save = new();
+                        save.ReadFromConsoleFile(file);
+                        save.WriteToPCFile(file);
+                        Console.WriteLine("done!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"error: {ex.Message}");
+                        return;
+                    }
+                }
+                else
                 {
                     Console.WriteLine($"Skipping conversion of {filename}...");
                 }
@@ -110,6 +127,22 @@ namespace DeltaruneSaveConverter
                     {
                         Console.Write($"Converting save file {filename} from PC to console... ");
                         DeltaruneCh1 save = new();
+                        save.ReadFromPCFile(file);
+                        save.WriteToConsoleFile($"./temp/{filename}");
+                        Console.WriteLine("done!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"error: {ex.Message}");
+                        return;
+                    }
+                }
+                else if (filename.StartsWith("filech2")) // assume this is a PC save file from Chapter 2
+                {
+                    try
+                    {
+                        Console.Write($"Converting save file {filename} from PC to console... ");
+                        DeltaruneCh2 save = new();
                         save.ReadFromPCFile(file);
                         save.WriteToConsoleFile($"./temp/{filename}");
                         Console.WriteLine("done!");
@@ -162,6 +195,7 @@ namespace DeltaruneSaveConverter
 
         static void ConvertFileFromConsole(string consolePath, string pcPath)
         {
+            // todo: chapter1/chapter2 toggle or detection
             Console.WriteLine($"Converting \"{consolePath}\" from console format to PC format at \"{pcPath}\"...");
             DeltaruneCh1 save = new();
             save.ReadFromConsoleFile(consolePath);
@@ -170,6 +204,7 @@ namespace DeltaruneSaveConverter
 
         static void ConvertFileFromPC(string pcPath, string consolePath)
         {
+            // todo: chapter1/chapter2 toggle or detection
             Console.WriteLine($"Converting \"{pcPath}\" from PC format to console format at \"{consolePath}\"...");
             DeltaruneCh1 save = new();
             save.ReadFromPCFile(pcPath);
