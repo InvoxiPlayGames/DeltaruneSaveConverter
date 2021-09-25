@@ -373,7 +373,7 @@ namespace DeltaruneSaveConverter
             int line = 0;
             truename = filelines[line];
             line++;
-            new GMSListDecoder(filelines[line]).ToStringArray(ref othername);
+            new GMSListDecoder(filelines[line]).ToStringArray(ref othername, 6);
             line++;
             for (int i = 0; i < 3; i++)
             {
@@ -392,25 +392,25 @@ namespace DeltaruneSaveConverter
             line++;
             darkzone = Convert.ToDouble(filelines[line]);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref hp);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref hp, 5);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref maxhp);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref maxhp, 5);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref at);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref at, 5);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref df);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref df, 5);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref mag);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref mag, 5);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref guts);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref guts, 5);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref charweapon);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref charweapon, 5);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref chararmor1);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref chararmor1, 5);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref chararmor2);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref chararmor2, 5);
             line++;
-            new GMSListDecoder(filelines[line]).ToStringArray(ref weaponstyle);
+            new GMSListDecoder(filelines[line]).ToStringArray(ref weaponstyle, 5);
             line++;
             for (int i = 0; i < 5; i++)
             {
@@ -449,15 +449,15 @@ namespace DeltaruneSaveConverter
             line++;
             grazesize = Convert.ToDouble(filelines[line]);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref item);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref item, 13);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref keyitem);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref keyitem, 13);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref weapon);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref weapon, 48);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref armor);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref armor, 48);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref pocketitem);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref pocketitem, 72);
             line++;
             tension = Convert.ToDouble(filelines[line]);
             line++;
@@ -485,11 +485,11 @@ namespace DeltaruneSaveConverter
             line++;
             ladef = Convert.ToDouble(filelines[line]);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref litem);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref litem, 8);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref phone);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref phone, 8);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref flag);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref flag, 2500);
             line++;
             plot = Convert.ToDouble(filelines[line]);
             line++;

@@ -49,7 +49,7 @@ namespace DeltaruneSaveConverter
 
         public GMSListDecoder(string listhex)
         {
-            if (!listhex.StartsWith("2E010000"))
+            if (!listhex.StartsWith("2E010000") && !listhex.StartsWith("2F010000"))
             {
                 throw new Exception("String was passed to GMSListDecoder that is not a ds_list.");
             } else if (listhex.Length % 2 != 0)
@@ -94,25 +94,27 @@ namespace DeltaruneSaveConverter
 
         public string GetString(int i)
         {
+            if (GetType(i) != GMSListItemType.GMSListString) return "";
             return ((GMSListStringItem)list[i]).stringValue;
         }
 
         public double GetReal(int i)
         {
+            if (GetType(i) != GMSListItemType.GMSListReal) return 0;
             return ((GMSListRealItem)list[i]).realValue;
         }
 
-        public void ToRealArray(ref double[] output)
+        public void ToRealArray(ref double[] output, int length)
         {
-            for (int i = 0; i < ListSize(); i++)
+            for (int i = 0; i < length; i++)
             {
                 output[i] = GetReal(i);
             }
         }
 
-        public void ToStringArray(ref string[] output)
+        public void ToStringArray(ref string[] output, int length)
         {
-            for (int i = 0; i < ListSize(); i++)
+            for (int i = 0; i < length; i++)
             {
                 output[i] = GetString(i);
             }

@@ -188,6 +188,7 @@ namespace DeltaruneSaveConverter
         static void ExtractSAV(string consoleSAV, string extractPath)
         {
             Console.WriteLine($"Extracting \"{consoleSAV}\" to \"{extractPath}\"...");
+            if (!Directory.Exists(extractPath)) Directory.CreateDirectory(extractPath);
             SAVFormat.Extract(consoleSAV, extractPath);
         }
 
