@@ -27,7 +27,7 @@ namespace DeltaruneSaveConverter
         public double[] charweapon = new double[5];
         public double[] chararmor1 = new double[5];
         public double[] chararmor2 = new double[5];
-        public string[] weaponstyle = new string[5];
+        public double[] weaponstyle = new double[5];
         public double[,] itemat = new double[5, 4];
         public double[,] itemdf = new double[5, 4];
         public double[,] itemmag = new double[5, 4];
@@ -115,7 +115,7 @@ namespace DeltaruneSaveConverter
                 line++;
                 chararmor2[i] = Convert.ToDouble(filelines[line]);
                 line++;
-                weaponstyle[i] = filelines[line];
+                weaponstyle[i] = Convert.ToDouble(filelines[line]);
                 line++;
                 for (int q = 0; q < 4; q++)
                 {
@@ -264,7 +264,7 @@ namespace DeltaruneSaveConverter
                 line++;
                 filelines[line] = chararmor2[i].ToString();
                 line++;
-                filelines[line] = weaponstyle[i];
+                filelines[line] = weaponstyle[i].ToString();
                 line++;
                 for (int q = 0; q < 4; q++)
                 {
@@ -410,7 +410,7 @@ namespace DeltaruneSaveConverter
             line++;
             new GMSListDecoder(filelines[line]).ToRealArray(ref chararmor2, 5);
             line++;
-            new GMSListDecoder(filelines[line]).ToStringArray(ref weaponstyle, 5);
+            new GMSListDecoder(filelines[line]).ToRealArray(ref weaponstyle, 5);
             line++;
             for (int i = 0; i < 5; i++)
             {
@@ -629,6 +629,18 @@ namespace DeltaruneSaveConverter
             filelines[line] = time.ToString();
             //File.WriteAllLines(ConsoleFilePath, filelines); - trailing newline
             File.WriteAllText(ConsoleFilePath, string.Join("\r\n", filelines));
+        }
+
+        public static bool IsPCSaveFile(string filename)
+        {
+            string[] lines = File.ReadAllLines(filename);
+            return lines.Length == 3055;
+        }
+
+        public static bool IsConsoleSaveFile(string filename)
+        {
+            string[] lines = File.ReadAllLines(filename);
+            return lines.Length == 308;
         }
     }
 }

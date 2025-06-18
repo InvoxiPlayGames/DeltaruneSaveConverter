@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime;
 using System.Text.Json;
 
 namespace DeltaruneSaveConverter
@@ -14,11 +15,6 @@ namespace DeltaruneSaveConverter
             Console.WriteLine("commands:");
             Console.WriteLine("ConvertFromConsole: extracts a SAV file from path1 into path2 and converts the save files into PC format");
             Console.WriteLine("ConvertFromPC: converts save files from path1 into console format and packs them into a SAV at path2");
-            Console.WriteLine("ExtractSAV: extracts a SAV file from path1 into path2 - supports UNDERTALE");
-            Console.WriteLine("PackSAV: packs a SAV file with files from path1 into path2 - supports UNDERTALE");
-            Console.WriteLine("ConvertFileFromConsole: converts the save file at path1 into PC format and saves it at path2");
-            Console.WriteLine("ConvertFileFromPC: converts the save file at path1 into console format and saves it at path2");
-            Console.WriteLine("BuildINI: builds a dr.ini file from a folder containing PC-format save files");
             Console.WriteLine();
             Console.WriteLine("example:");
             Console.WriteLine("DeltaruneSaveConverter ConvertFromConsole deltarune_ch1.sav ./pcsave/");
@@ -63,8 +59,50 @@ namespace DeltaruneSaveConverter
             return;
         }
 
+        /*
+         * Okay, this one's annoying.
+         * DELTARUNE Chapter 1&2 DEMO, at least on Switch, has leftover files that are outdated and broken.
+         * Only deltarune_ch1.sav is good, EVEN FOR CHAPTER 2 SAVES. This has been the cause of too much confusion.
+         * No, ChatGPT doesn't know this.
+         */
+        static bool DetectIfDemoSavegameWithOldStuff(string consoleSAV)
+        {
+            if (Path.GetFileName(consoleSAV) == "deltarune_ch2.sav")
+            {
+                string possibleCh1Path = consoleSAV.Replace("deltarune_ch2.sav", "deltarune_ch1.sav");
+                if (File.Exists(possibleCh1Path))
+                    return true;
+            }
+            else if (Path.GetFileName(consoleSAV) == "deltarune.sav")
+            {
+                string possibleCh1Path = consoleSAV.Replace("deltarune.sav", "deltarune_ch1.sav");
+                if (File.Exists(possibleCh1Path))
+                    return true;
+            }
+            return false;
+        }
+
         static void ConvertFromConsole(string consoleSAV, string pcPath)
         {
+            if (DetectIfDemoSavegameWithOldStuff(consoleSAV))
+            {
+                Console.WriteLine("!! WARNING !! If you're extracting from Chapter 1 & 2 DEMO, use \"deltarune_ch1.sav\" instead!");
+                Console.WriteLine("Press Y to continue conversion, press any other button to cancel.");
+                ConsoleKeyInfo cki = Console.ReadKey(true);
+                if (cki.KeyChar != 'Y' && cki.KeyChar != 'y')
+                    return;
+                Console.WriteLine("");
+            }
+            if (Directory.Exists(pcPath))
+            {
+                Console.WriteLine("!! WARNING !! You're extracting to a folder that already contains save files.");
+                Console.WriteLine("You will overwrite any existing save data.");
+                Console.WriteLine("Press Y to continue conversion, press any other button to cancel.");
+                ConsoleKeyInfo cki = Console.ReadKey(true);
+                if (cki.KeyChar != 'Y' && cki.KeyChar != 'y')
+                    return;
+                Console.WriteLine("");
+            }
             Console.Write("Extracting console SAV file... ");
             try
             {
@@ -83,11 +121,15 @@ namespace DeltaruneSaveConverter
                 {
                     try
                     {
-                        Console.Write($"Converting save file {filename} from console to PC... ");
-                        DeltaruneCh1 save = new();
-                        save.ReadFromConsoleFile(file);
-                        save.WriteToPCFile(file);
-                        Console.WriteLine("done!");
+                        if (DeltaruneCh1.IsConsoleSaveFile(file)) {
+                            Console.Write($"Converting save file {filename} from console to PC... ");
+                            DeltaruneCh1 save = new();
+                            save.ReadFromConsoleFile(file);
+                            save.WriteToPCFile(file);
+                            Console.WriteLine("done!");
+                        } else {
+                            Console.WriteLine($"{filename} is already PC format, skipping...!");
+                        }
                     } catch (Exception ex)
                     {
                         Console.WriteLine($"error: {ex.Message}");
@@ -98,11 +140,15 @@ namespace DeltaruneSaveConverter
                 {
                     try
                     {
-                        Console.Write($"Converting save file {filename} from console to PC... ");
-                        DeltaruneCh2 save = new();
-                        save.ReadFromConsoleFile(file);
-                        save.WriteToPCFile(file);
-                        Console.WriteLine("done!");
+                        if (DeltaruneCh2.IsConsoleSaveFile(file)) {
+                            Console.Write($"Converting save file {filename} from console to PC... ");
+                            DeltaruneCh2 save = new();
+                            save.ReadFromConsoleFile(file);
+                            save.WriteToPCFile(file);
+                            Console.WriteLine("done!");
+                        } else {
+                            Console.WriteLine($"{filename} is already PC format, skipping...!");
+                        }
                     }
                     catch (Exception ex)
                     {

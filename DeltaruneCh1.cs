@@ -589,5 +589,17 @@ namespace DeltaruneSaveConverter
             filelines[line] = time.ToString();
             File.WriteAllText(ConsoleFilePath, string.Join("\r\n", filelines));
         }
+
+        public static bool IsPCSaveFile(string filename)
+        {
+            string[] lines = File.ReadAllLines(filename);
+            return lines.Length == 10318;
+        }
+
+        public static bool IsConsoleSaveFile(string filename)
+        {
+            string[] lines = File.ReadAllLines(filename);
+            return lines.Length == 223;
+        }
     }
 }

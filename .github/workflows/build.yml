@@ -1,0 +1,25 @@
+name: Build
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    strategy:
+        matrix:
+            rid: [win-x64, osx-arm64, linux-x64]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Build and Publish
+      run: dotnet publish -c Release -r ${{ matrix.rid }}
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: DeltaruneSaveConverter-${{ matrix.rid }}-${{ github.sha }}
+        path: bin/Release/net8.0/${{ matrix.rid }}/publish/
