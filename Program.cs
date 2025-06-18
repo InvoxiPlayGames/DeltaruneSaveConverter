@@ -94,7 +94,7 @@ namespace DeltaruneSaveConverter
                         return;
                     }
                 }
-                else if (filename.StartsWith("filech2")) // assume this is a console save file from Chapter 2
+                else if (filename.StartsWith("filech2") || filename.StartsWith("filech3") || filename.StartsWith("filech4")) // assume this is a console save file from Chapter 2
                 {
                     try
                     {
@@ -141,7 +141,7 @@ namespace DeltaruneSaveConverter
                         return;
                     }
                 }
-                else if (filename.StartsWith("filech2")) // assume this is a PC save file from Chapter 2
+                else if (filename.StartsWith("filech2") || filename.StartsWith("filech3") || filename.StartsWith("filech4")) // assume this is a PC save file from Chapter 2
                 {
                     try
                     {
@@ -202,7 +202,7 @@ namespace DeltaruneSaveConverter
         {
             // todo: chapter1/chapter2 toggle or detection
             Console.WriteLine($"Converting \"{consolePath}\" from console format to PC format at \"{pcPath}\"...");
-            DeltaruneCh1 save = new();
+            DeltaruneCh2 save = new();
             save.ReadFromConsoleFile(consolePath);
             save.WriteToPCFile(pcPath);
         }
@@ -211,7 +211,7 @@ namespace DeltaruneSaveConverter
         {
             // todo: chapter1/chapter2 toggle or detection
             Console.WriteLine($"Converting \"{pcPath}\" from PC format to console format at \"{consolePath}\"...");
-            DeltaruneCh1 save = new();
+            DeltaruneCh2 save = new();
             save.ReadFromPCFile(pcPath);
             save.WriteToConsoleFile(consolePath);
         }
@@ -275,10 +275,66 @@ namespace DeltaruneSaveConverter
                         ini.Write("Date", $"\"0\"", $"G_2_{saveid}"); // TODO: Get valid date value
                         ini.Write("Room", $"\"{save.currentroom}\"", $"G_2_{saveid}");
                         ini.Write("InitLang", $"\"{save.flag[912]}\"", $"G_2_{saveid}");
-                        int uraboss = 0;
-                        if (save.flag[571] == 1) uraboss = 1;
-                        if (save.flag[571] == 2) uraboss = 2;
+                        int uraboss = (int)save.flag[571];
                         ini.Write("UraBoss", $"\"{uraboss}\"", $"G_2_{saveid}");
+                        Console.WriteLine("done!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"error: {ex.Message}");
+                        return;
+                    }
+                }
+                else if (filename.StartsWith("filech3")) // assume this is a PC save file from Chapter 3
+                {
+                    try
+                    {
+                        Console.Write($"Reading {filename}... ");
+                        DeltaruneCh2 save = new();
+                        save.ReadFromPCFile(file);
+                        Console.WriteLine("done!");
+                        Console.Write($"Writing \"{save.truename}\" chapter 3 save to INI... ");
+                        int saveid = int.Parse(filename.Replace("filech3_", ""));
+                        if (saveid >= 3 && saveid < 6)
+                            status = 1; // game complete, set console-only STATUS variable
+                        ini.Write("Name", save.truename, $"G_3_{saveid}");
+                        ini.Write("Level", $"\"{save.lv}\"", $"G_3_{saveid}");
+                        ini.Write("Love", $"\"{save.llv}\"", $"G_3_{saveid}");
+                        ini.Write("Time", $"\"{save.time}\"", $"G_3_{saveid}");
+                        ini.Write("Date", $"\"0\"", $"G_3_{saveid}"); // TODO: Get valid date value
+                        ini.Write("Room", $"\"{save.currentroom}\"", $"G_3_{saveid}");
+                        ini.Write("InitLang", $"\"{save.flag[912]}\"", $"G_3_{saveid}");
+                        int uraboss = (int)save.flag[1047];
+                        ini.Write("UraBoss", $"\"{uraboss}\"", $"G_3_{saveid}");
+                        Console.WriteLine("done!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"error: {ex.Message}");
+                        return;
+                    }
+                }
+                else if (filename.StartsWith("filech4")) // assume this is a PC save file from Chapter 4
+                {
+                    try
+                    {
+                        Console.Write($"Reading {filename}... ");
+                        DeltaruneCh2 save = new();
+                        save.ReadFromPCFile(file);
+                        Console.WriteLine("done!");
+                        Console.Write($"Writing \"{save.truename}\" chapter 4 save to INI... ");
+                        int saveid = int.Parse(filename.Replace("filech4_", ""));
+                        if (saveid >= 3 && saveid < 6)
+                            status = 1; // game complete, set console-only STATUS variable
+                        ini.Write("Name", save.truename, $"G_4_{saveid}");
+                        ini.Write("Level", $"\"{save.lv}\"", $"G_4_{saveid}");
+                        ini.Write("Love", $"\"{save.llv}\"", $"G_4_{saveid}");
+                        ini.Write("Time", $"\"{save.time}\"", $"G_4_{saveid}");
+                        ini.Write("Date", $"\"0\"", $"G_4_{saveid}"); // TODO: Get valid date value
+                        ini.Write("Room", $"\"{save.currentroom}\"", $"G_4_{saveid}");
+                        ini.Write("InitLang", $"\"{save.flag[912]}\"", $"G_4_{saveid}");
+                        int uraboss = (int)save.flag[1629];
+                        ini.Write("UraBoss", $"\"{uraboss}\"", $"G_4_{saveid}");
                         Console.WriteLine("done!");
                     }
                     catch (Exception ex)

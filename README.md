@@ -1,12 +1,14 @@
 # DeltaruneSaveConverter
 
-A C#.NET command line tool to convert DELTARUNE Chapter 1 save files between PC and console editions of the game. This tool can also, in theory, be used to extract and pack UNDERTALE save files between consoles.
+A C#.NET command line tool to convert DELTARUNE Chapter 1 & 2 save files between PC and console editions of the game. This tool can also, in theory, be used to extract and pack UNDERTALE save files between consoles.
 
 This program is a work in progress and may not work in all situations - this has only been tested converting 1 file from the Nintendo Switch version of DELTARUNE to the PC version and back.
 
+I am not responsible if you lose any progress if using this tool.
+
 ## Usage
 
-Requires [.NET 5.0 Runtime](https://dotnet.microsoft.com/download) (or later...?) installed.
+Requires [.NET 8.0 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime) installed.
 
 ```
 DeltaruneSaveConverter [command] [path1] [path2]
@@ -43,22 +45,21 @@ DeltaruneSaveConverter ConvertFileFromPC ./pcsave/filech1_0 ./consolesave/filech
 - Converts the PC save file ./pcsave/filech1_0 into console format and saves it into /consolesave/filech1_0
 ```
 
+**Notice:** When converting from Chapter1&2 DEMO, you will still be converting `deltarune_ch1.sav` to get your Chapter 2 saves. **The other .sav files must be ignored.**
+
 ## Compiling
 
-Compiling the program requires the [.NET 5.0 SDK](https://dotnet.microsoft.com/download) and can be done by typing `dotnet build` into a command line. Windows users can also use Visual Studio 2019 or later to compile the solution.
+Compiling the program requires the [.NET 8.0 SDK](https://dotnet.microsoft.com/download) and can be done by typing `dotnet build` into a command line. Windows users can also use Visual Studio 2022 or later to compile the solution.
 
 ## TODO
 
 (in no particular order)
 
-- Test conversion between PS4 and PC
-- Initial DELTARUNE Chapter 2 support
-- Friendlier user interface (+ GUI edition?)
-- Probably more idk, suggestions and contributions welcomed.
-- Far future/another project, make this into a multitool?
-	- Merging save files from both platforms into one seamlessly
-    - Parsing of UNDERTALE save files
-    - Save file editing
+- Chapter 3/4 support - Chapter 3 seems to be identical to Chapter 2.
+- Test conversion between PS4/PS5 and PC.
+- Test making sure "weird route"/"SideB"(?) information is preserved.
+- macOS/Linux support, NativeAOT stuff?
+- Friendlier user interface (+ GUI/web edition?)
 
 ## License
 
