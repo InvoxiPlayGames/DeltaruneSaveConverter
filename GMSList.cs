@@ -9,7 +9,13 @@ namespace DeltaruneSaveConverter
     enum GMSListItemType
     {
         GMSListReal,
-        GMSListString
+        GMSListString,
+        
+        // found in someone's chapter 2 save - contents for it just had real value 1
+        GMSListRealThirteen = 13,
+
+        // found in someone's chapter 4 save - no idea what the contents were meant to be... but 8 bytes? get real
+        GMSListRealWeird = 10
     }
     class GMSListItem
     {
@@ -66,7 +72,7 @@ namespace DeltaruneSaveConverter
             {
                 GMSListItemType type = (GMSListItemType)BitConverter.ToInt32(rawlist, i);
                 i += 4;
-                if (type == GMSListItemType.GMSListReal)
+                if (type == GMSListItemType.GMSListReal || type == GMSListItemType.GMSListRealWeird || type == GMSListItemType.GMSListRealThirteen)
                 {
                     double value = BitConverter.ToDouble(rawlist, i);
                     i += 8;
@@ -82,7 +88,7 @@ namespace DeltaruneSaveConverter
                     i += stringLength;
                 } else
                 {
-                    throw new Exception("Unknown list type found in GMSListDecoder");
+                    throw new Exception($"Unknown list type {BitConverter.ToInt32(rawlist, i - 4)} found in GMSListDecoder at pos {i - 4}");
                 }
             }
         }
