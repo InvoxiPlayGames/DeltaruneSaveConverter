@@ -489,7 +489,7 @@ namespace DeltaruneSaveConverter
             line++;
             new GMSListDecoder(filelines[line]).ToRealArray(ref phone, 8);
             line++;
-            new GMSListDecoder(filelines[line]).ToRealArray(ref flag, 2500);
+            Flag.ParseFlagArray(filelines[line], ref flag, 2500);
             line++;
             plot = Convert.ToDouble(filelines[line]);
             line++;
