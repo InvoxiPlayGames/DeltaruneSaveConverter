@@ -408,7 +408,8 @@ namespace DeltaruneSaveConverter
                         ini.Write("Date", $"\"0\"", $"G_5_{saveid}"); // TODO: Get valid date value
                         ini.Write("Room", $"\"{save.currentroom}\"", $"G_5_{saveid}");
                         ini.Write("InitLang", $"\"{save.flag[912]}\"", $"G_5_{saveid}");
-                        ini.Write("UraBoss", $"\"0\"", $"G_5_{saveid}");
+                        int uraboss = (int)save.flag[1908];
+                        ini.Write("UraBoss", $"\"{uraboss}\"", $"G_5_{saveid}");
                         Console.WriteLine("done!");
                     }
                     catch (Exception ex)
